@@ -10,6 +10,10 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
+
+  // フロントからのアクセスを許可するようCORSの設定をここでしている
+  app.enableCors();
+
   await app.listen(3000, '0.0.0.0');
 
   if (module.hot) {

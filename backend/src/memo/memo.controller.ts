@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { Memo } from 'src/entities/memo.entity';
 import { DeleteResult, InsertResult, UpdateResult } from 'typeorm';
 import { MemoDTO } from './dto';
@@ -24,16 +32,17 @@ export class MemoController {
   }
 
   @Put(':id/update')
-    async update(@Param('id') id: string, @Body() newMemo: MemoDTO): Promise<UpdateResult> {
-      const currentMemo = await this.service.show(Number(id))
-      const updatedMemo: MemoDTO = {...currentMemo, ...newMemo}
-    return await this.service.update(Number(id), updatedMemo)
+  async update(
+    @Param('id') id: string,
+    @Body() newMemo: MemoDTO,
+  ): Promise<UpdateResult> {
+    const currentMemo = await this.service.show(Number(id));
+    const updatedMemo: MemoDTO = { ...currentMemo, ...newMemo };
+    return await this.service.update(Number(id), updatedMemo);
   }
 
-  @Delete(":id/delete")
-  async delete(
-    @Param("id") id: string): Promise<DeleteResult>{
-      return await this.service.delete(Number(id));
-    }
-  )
+  @Delete(':id/delete')
+  async delete(@Param('id') id: string): Promise<DeleteResult> {
+    return await this.service.delete(Number(id));
+  }
 }

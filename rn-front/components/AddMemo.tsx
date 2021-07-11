@@ -1,53 +1,87 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
+import { CheckBox } from "react-native-elements";
 
 const ComponentContainer = styled.View`
-	flex-direction: row;
+	margin: 0 auto;
+	margin-top: 20px;
 `;
 
 const InputContainer = styled.View`
-	flex-direction: row;
 	border-radius: 10px;
 `;
 
 const Input = styled.TextInput`
-	font-family: poppins-regular;
-	font-size: 20px;
-	background-color: white;
-	width: 300px;
-	margin-right: 20px;
+	font-size: 15px;
+	width: 100%;
 	padding: 10px;
 	margin-bottom: 20px;
-	border-radius: 10px;
 `;
 
 const SubmitButton = styled.TouchableOpacity`
-	width: 50px;
+	width: 300px;
 	justify-content: center;
 	align-items: center;
-	background-color: whitesmoke;
+	background-color: #1976d2;
 	margin-bottom: 20px;
-	border-radius: 50px;
+	padding: 10px;
 `;
 
-const AddInput = ({ submitHandler }) => {
-	const [value, setValue] = useState("");
+const SubmitButtonText = styled.Text`
+	color: #fff;
+`;
 
-	const onChangeText = (text) => {
-		setValue(text);
+interface AddInputProps {
+	submitAddMemo: (value: any) => void;
+}
+
+const AddInput: React.FC<AddInputProps> = ({ submitAddMemo }) => {
+	const [title, setTitle] = useState<string>();
+	const [todo, setTodo] = useState<string>();
+	const [isHighPriority, setIsHighPriority] = useState(false);
+	const onChangeTitle = (text: string) => {
+		setTitle(text);
+	};
+	const onChangeTodo = (text: string) => {
+		setTodo(text);
+	};
+	const toggleCheckBox = () => {
+		setIsHighPriority(!isHighPriority);
+	};
+
+	const submit = () => {
+		submitAddMemo({
+			title: title,
+			todo: todo,
+			highPriority: isHighPriority,
+		});
+		setTitle("");
+		setTodo("");
+		setIsHighPriority(false);
 	};
 
 	return (
 		<ComponentContainer>
 			<InputContainer>
-				<Input placeholder="Add Task..." onChangeText={onChangeText} />
+				<Input
+					placeholder="タイトル入力"
+					onChangeText={onChangeTitle}
+					value={title}
+				/>
+				<Input
+					placeholder="TODO内容を入力"
+					onChangeText={onChangeTodo}
+					value={todo}
+				/>
+				<CheckBox
+					title="優先度高"
+					checked={isHighPriority}
+					onPress={toggleCheckBox}
+				/>
 			</InputContainer>
-			<SubmitButton
-				onPress={() => {
-					alert("clicked");
-					// setValue(submitHandler(value));
-				}}
-			></SubmitButton>
+			<SubmitButton onPress={() => submit()}>
+				<SubmitButtonText>タスク作成</SubmitButtonText>
+			</SubmitButton>
 		</ComponentContainer>
 	);
 };
