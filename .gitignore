@@ -33,3 +33,18 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 backend/data/dev.sqlite
+
+
+rn-front/node_modules/
+rn-front/.expo/
+rn-front/npm-debug.*
+rn-front/*.jks
+rn-front/*.p8
+rn-front/*.p12
+rn-front/*.key
+rn-front/*.mobileprovision
+rn-front/*.orig.*
+rn-front/web-build/
+
+# macOS
+.DS_Store
